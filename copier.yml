@@ -30,14 +30,14 @@ odoo_version:
 
 org_slug:
   type: str
-  default: OCA
+  default: itbrasil-odoo
   help:
     What's the organization slug? If you are creating
-    https://github.com/OCA/server-tools, then write "OCA" here.
+    https://github.com/itbrasil-odoo/server-tools, then write "itbrasil-odoo" here.
 
 org_name:
   type: str
-  default: Odoo Community Association (OCA)
+  default: IT Brasil
   help:
     Tell me the Organization name. It's supposed to be human-readable. It will be used
     in the author key of the __manifest__ files.
@@ -45,7 +45,7 @@ org_name:
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/OCA/server-tools, then
+    What's the repo slug? If you are creating https://github.com/itbrasil-odoo/server-tools, then
     write "server-tools" here.
 
 repo_name:
@@ -203,6 +203,7 @@ github_ci_extra_env:
     Example: {"KEY": "VALUE"}
   when: *ci_is_github
 
-convert_readme_fragments_to_markdown:
-  default: "{% if odoo_version < 17.0 -%}no{% else %}yes{% endif %}"
-  type: bool
+banner_url:
+  type: str
+  default: "https://itbrasil.com.br/web/image/24368-93015bbb/readme-banner-image.png"
+  help: URL of the banner image to use in README files.
