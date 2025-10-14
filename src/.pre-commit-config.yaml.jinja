@@ -167,14 +167,14 @@ repos:
     hooks:
       - id: whool-init
   {%- endif %}
-  - repo: https://github.com/oca/maintainer-tools
+  - repo: https://github.com/itbrasil-odoo/maintainer-tools
     rev: {{ repo_rev.maintainer_tools }}
     hooks:
       # update the NOT INSTALLABLE ADDONS section above
-      - id: oca-update-pre-commit-excluded-addons
-      - id: oca-fix-manifest-website
+      - id: itbr-update-pre-commit-excluded-addons
+      - id: itbr-fix-manifest-website
         args: ["{{ repo_website }}"]
-      - id: oca-gen-addon-readme
+      - id: itbr-gen-addon-readme
         args:
           - --addons-dir=.
           - --branch={{ "%.01f" | format(odoo_version) }}
@@ -186,7 +186,7 @@ repos:
           - --convert-fragments-to-markdown
           {%- endif %}
       {%- if use_pyproject_toml and generate_requirements_txt %}
-      - id: oca-gen-external-dependencies
+      - id: itbr-gen-external-dependencies
       {%- endif %}
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
