@@ -36,9 +36,9 @@ poetry run pytest
 ## General IT Brasil guidelines
 
 Please follow the official guide from the
-[IT Brasil Guidelines page](https://itbrasil-odoo.github.io/) where applicable
-(most of it relates to Odoo-specific code, while this one is a template and some things
-just don't apply here).
+[IT Brasil Guidelines page](https://itbrasil-odoo.github.io/) where applicable (most of
+it relates to Odoo-specific code, while this one is a template and some things just
+don't apply here).
 
 ## General open source contribution guidelines
 

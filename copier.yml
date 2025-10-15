@@ -45,8 +45,8 @@ org_name:
 repo_slug:
   type: str
   help:
-    What's the repo slug? If you are creating https://github.com/itbrasil-odoo/server-tools, then
-    write "server-tools" here.
+    What's the repo slug? If you are creating
+    https://github.com/itbrasil-odoo/server-tools, then write "server-tools" here.
 
 repo_name:
   type: str
