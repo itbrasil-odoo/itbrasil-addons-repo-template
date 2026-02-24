@@ -77,7 +77,7 @@ organizations.
 
 ## The legal stuff
 
-Copyright holder: [IT Brasil](https://itbrasil.com.br/).
+Copyright holder: [Odoo Community Association](https://odoo-community.org/).
 
 Template license: [MIT](LICENSE)
 
