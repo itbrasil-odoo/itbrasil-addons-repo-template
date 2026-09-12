@@ -9,6 +9,10 @@ on:
       - "{{ odoo_version }}"
       - "{{ odoo_version }}-ocabot-*"
 
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
+
 {%
 set IMAGES = {
   "odoo": {
@@ -121,7 +125,9 @@ jobs:
         {%- endif %}
     services:
       postgres:
-        {%- if odoo_version < 16 %}
+        {%- if postgres_image %}
+        image: {{ postgres_image }}
+        {%- elif odoo_version < 16 %}
         image: postgres:9.6
         {%- elif odoo_version < 19 %}
         image: postgres:12

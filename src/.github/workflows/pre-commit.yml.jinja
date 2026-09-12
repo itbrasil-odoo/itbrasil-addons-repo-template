@@ -1,3 +1,4 @@
+{% from 'src/.pre-commit-config.yaml.jinja' import repo_rev with context %}
 name: pre-commit
 
 on:
@@ -8,6 +9,10 @@ on:
     branches:
       - "{{ odoo_version }}"
       - "{{ odoo_version }}-ocabot-*"
+
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: true
 
 jobs:
   pre-commit:
@@ -26,9 +31,10 @@ jobs:
           python-version: "3.8"
 {%- else %}
         with:
-          python-version: "3.11"
+          python-version: "{{ repo_rev.python |replace('python','') }}"
 {%- endif %}
           cache: 'pip'
+          cache-dependency-path: '.pre-commit-config.yaml'
       - name: Get python version
         run: echo "PY=$(python -VV | sha256sum | cut -d' ' -f1)" >> $GITHUB_ENV
       - uses: actions/cache@v4

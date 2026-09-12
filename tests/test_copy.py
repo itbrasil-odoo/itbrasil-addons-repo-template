@@ -2,7 +2,7 @@ from pathlib import Path
 
 import packaging.version
 import yaml
-from copier.main import run_copy
+from copier import run_copy
 
 # Change this one in case it becomes a mandatory check
 SOME_PYLINT_OPTIONAL_CHECK = "redefined-builtin"
@@ -30,10 +30,9 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         "repo_slug": REPO_SLUG,
         "repo_name": "Test repo",
         "repo_description": "Test repo description",
-        "ci": "Travis",
         "org_slug": "OCA",
     }
-    run_copy(str(cloned_template), tmp_path, data=data, defaults=True, unsafe=True)
+    run_copy(str(cloned_template), tmp_path, data=data, defaults=True)
     # When loading YAML files, we are also testing their syntax is correct, which
     # can be a little bit tricky due to the way both Jinja and YAML handle whitespace
     answers = yaml.safe_load((tmp_path / ".copier-answers.yml").read_text())
@@ -52,11 +51,21 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
         # underscores
         valid_odoo_versions = "valid-odoo-versions"
     assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_mandatory
+    if odoo_version >= 13:
+        expected_deprecated_modules = "pdb,pudb,ipdb,bs4"
+        if odoo_version >= 20:
+            expected_deprecated_modules += ",pytz"
+        assert "[IMPORTS]" in pylintrc_mandatory
+        assert f"deprecated-modules={expected_deprecated_modules}" in pylintrc_mandatory
+        assert "deprecated-module," in pylintrc_mandatory
     assert SOME_PYLINT_OPTIONAL_CHECK not in pylintrc_mandatory
     pylintrc_optional = (tmp_path / ".pylintrc").read_text()
     assert "disable=all\n" in pylintrc_optional
     assert "# This .pylintrc contains" in pylintrc_optional
     assert f"{valid_odoo_versions}={odoo_version}" in pylintrc_optional
+    if odoo_version >= 13:
+        assert f"deprecated-modules={expected_deprecated_modules}" in pylintrc_optional
+        assert "deprecated-module," in pylintrc_optional
     assert SOME_PYLINT_OPTIONAL_CHECK in pylintrc_optional
     if odoo_version < 17:
         flake8 = (tmp_path / ".flake8").read_text()
@@ -80,10 +89,6 @@ def test_bootstrap(tmp_path: Path, odoo_version: float, cloned_template: Path):
     readme = (tmp_path / "README.md").read_text()
     assert (
         f"[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/{REPO_SLUG}&target_branch={odoo_version})"  # noqa: B950
-        in readme
-    )
-    assert (
-        f"[![Build Status](https://travis-ci.com/OCA/{REPO_SLUG}.svg?branch={odoo_version})](https://travis-ci.com/OCA/{REPO_SLUG})"  # noqa: B950
         in readme
     )
     assert (
