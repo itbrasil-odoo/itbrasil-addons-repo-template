@@ -218,15 +218,6 @@ repos:
           {%- endif %}
       {%- if use_pyproject_toml and generate_requirements_txt %}
       - id: oca-gen-external-dependencies
-        {%- if odoo_version >= 20 %}
-        # whool resolves an addon's series through manifestoo-core, whose
-        # OdooSeries enum ends at 19.0 upstream, so on this branch every addon
-        # fails to build and the hook wipes requirements.txt. Until 20.0
-        # support is released upstream, take manifestoo-core from our fork.
-        additional_dependencies:
-          - "manifestoo-core @
-            git+https://github.com/NextERP-Romania/manifestoo-core@add-odoo-20-support"
-        {%- endif %}
       {%- endif %}
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: {{ repo_rev.odoo_pre_commit_hooks }}
