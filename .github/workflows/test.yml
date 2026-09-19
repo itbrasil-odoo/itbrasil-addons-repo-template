@@ -37,7 +37,7 @@ jobs:
             machine: ubuntu-24.04
           - odoo-version: 20.0
             python-version: "3.12"
-            machine: ubuntu-24.04
+            machine: ubuntu-26.04
     steps:
       # Prepare environment
       - uses: actions/checkout@v4
