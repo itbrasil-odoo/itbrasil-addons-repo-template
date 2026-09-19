@@ -133,8 +133,10 @@ jobs:
         image: postgres:9.6
         {%- elif odoo_version < 19 %}
         image: postgres:12
-        {%- else %}
+        {%- elif odoo_version < 20 %}
         image: postgres:13
+        {%- else %}
+        image: postgres:16
         {%- endif %}
         env:
           POSTGRES_USER: odoo
